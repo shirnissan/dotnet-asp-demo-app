@@ -30,4 +30,3 @@ dotnet aspnetapp.dll
 ```
 http://localhost
 
-## TEST
