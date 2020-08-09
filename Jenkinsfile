@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'Tast'}
+  agent { label 'Test'}
   stages {
     stage('dotnet restore and build') {
       agent any
