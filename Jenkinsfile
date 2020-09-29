@@ -25,6 +25,11 @@ pipeline {
 				sh "docker login --username=${env.DOCKERHUB_USER_NAME} --password=${env.DOCKERHUB_PASSWORD}"
 			}
 		}
+		stage('Docker push') {
+			steps {
+				sh "docker push  ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
+			}
+		}
 		stage('Docker run'){
 			steps{
 				script{
