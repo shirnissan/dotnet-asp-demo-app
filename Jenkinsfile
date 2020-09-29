@@ -43,7 +43,7 @@ pipeline {
                         // Into each branch we put the pipeline code we want to execute
                         vms["node_" + nodeName] = {
                             node(nodeName) {
-					            sh "docker run ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
+					            sh "docker run -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
                             }
                         }
                     }   
