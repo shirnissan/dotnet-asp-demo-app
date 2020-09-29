@@ -35,17 +35,17 @@ pipeline {
                     def names =  nodeNames('TerraformVM')
                     for (int i=0; i<names.size(); ++i) {
                         def nodeName = names[i];
-                        // Into each branch we put the pipeline code we want to execute
-                        vms["node_" + nodeName] = {
-                            node(nodeName) {
-					            sh "docker run -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
+                            // Into each branch we put the pipeline code we want to execute
+                            vms["node_" + nodeName] = {
+                                node(nodeName) {
+					sh "docker run  -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
+                                }
                             }
-                        }
                     }   
                     // Now we trigger all vms
                     parallel vms
-		 }
-	     }
+		        }
+		}
         }
     }
 
