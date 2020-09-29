@@ -17,7 +17,7 @@ pipeline {
 		}
 		stage('Docker build and tag') {
 			steps {
-       				sh "docker build -t ${DOCKER_REGISTRY}/dotnet-demo:${BUILD_NUMBER} ."
+       				sh "docker build -t ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER} ."
 			}
 		}
 		stage('Login to docker hub') {
