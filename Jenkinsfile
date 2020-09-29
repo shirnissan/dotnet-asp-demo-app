@@ -17,7 +17,7 @@ pipeline {
 		}
 		stage('Docker build and tag') {
 			steps {
-       				sh "docker build --tag ${DOCKER_REGISTRY}/dotnet-demo:${BUILD_NUMBER} ."
+       				sh "docker build -t ${DOCKER_REGISTRY}/dotnet-demo:${BUILD_NUMBER} ."
 			}
 		}
 		stage('Login to docker hub') {
@@ -43,7 +43,7 @@ pipeline {
                         // Into each branch we put the pipeline code we want to execute
                         vms["node_" + nodeName] = {
                             node(nodeName) {
-					            sh "docker run  ${DOCKER_REGISTRY}/dotnet-demo:${BUILD_NUMBER}"
+					            sh "docker run ${DOCKER_REGISTRY}/dotnet-demo:${BUILD_NUMBER}"
                             }
                         }
                     }   
