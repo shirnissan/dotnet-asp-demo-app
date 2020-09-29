@@ -25,34 +25,27 @@ pipeline {
 				sh "docker login --username=${env.DOCKERHUB_USER_NAME} --password=${env.DOCKERHUB_PASSWORD}"
 			}
 		}
-		stage('Docker push') {
-			steps {
-				sh "docker push  ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
-			}
-		}
-			stage('Docker run'){
+		stage('Docker run'){
 			steps{
-				    sh "docker run -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
-
-				// script{
-                //     // The script triggers PayloadJob on every node.
-                //     // It uses Node and Label Parameter plugin to pass the job name to the payload job.
-                //     // The code will require approval of several Jenkins classes in the Script Security mode
-                //     def vms = [:]
-                //     def names =  nodeNames('TerraformVM')
-                //     for (int i=0; i<names.size(); ++i) {
-                //         def nodeName = names[i];
-                //         // Into each branch we put the pipeline code we want to execute
-                //         vms["node_" + nodeName] = {
-                //             node(nodeName) {
-				// 	            sh "docker run -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
-                //             }
-                //         }
-                //     }   
-                //     // Now we trigger all vms
-                //     parallel vms
-		        }
-	        }
+				script{
+                    // The script triggers PayloadJob on every node.
+                    // It uses Node and Label Parameter plugin to pass the job name to the payload job.
+                    // The code will require approval of several Jenkins classes in the Script Security mode
+                    def vms = [:]
+                    def names =  nodeNames('TerraformVM')
+                    for (int i=0; i<names.size(); ++i) {
+                        def nodeName = names[i];
+                        // Into each branch we put the pipeline code we want to execute
+                        vms["node_" + nodeName] = {
+                            node(nodeName) {
+					            sh "docker run -d ${DOCKER_REGISTRY}dotnet-demo:${BUILD_NUMBER}"
+                            }
+                        }
+                    }   
+                    // Now we trigger all vms
+                    parallel vms
+		 }
+	     }
         }
     }
 
